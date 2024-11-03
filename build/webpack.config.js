@@ -1,3 +1,4 @@
+// @ts-nocheck
 const webpack = require('webpack');
 
 const { NODE_ENV } = process.env;
@@ -10,7 +11,7 @@ webpack(webpackConfig, (err, stats) => {
         `${stats.toString({
             colors: true,
             modules: false,
-            children: false, // If you are using ts-loader, setting this to true will make TypeScript errors show up during build.
+            children: true,
             chunks: false,
             chunkModules: false
         })}\n\n`

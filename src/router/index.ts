@@ -8,6 +8,11 @@ export function createRouter() {
   const routes: Array<RouteConfig> = [
     {
       path: '/',
+      name: 'index',
+      component: HomeView
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView
     },

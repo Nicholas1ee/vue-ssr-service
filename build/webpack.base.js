@@ -1,18 +1,34 @@
-const { VueLoaderPlugin } = require("vue-loader")
-const { resolve } = require("./utils")
+const { VueLoaderPlugin } = require('vue-loader')
+const { resolve } = require('./utils')
 
 module.exports = {
-    devtool: "source-map",
-    target: "web",
+    devtool: 'source-map',
+    target: 'web',
+    output: {
+        path: resolve('dist'),
+        filename: '[name].js',
+        chunkFilename: '[id].js',
+        publicPath: '/',
+    },
     module: {
         rules: [
             {
                 test: /\.vue$/,
-                loader: "vue-loader",
+                loader: 'vue-loader',
             },
             {
                 test: /\.css$/,
-                use: ["vue-style-loader", "css-loader"],
+                use: ['vue-style-loader', 'css-loader',  {
+                    loader: 'postcss-loader',
+                    options: {
+                        postcssOptions: {
+                            plugins: [
+                                require('tailwindcss'),
+                                require('autoprefixer'),
+                            ],
+                        },
+                    },
+                },],
                 sideEffects: true,
             },
             {
@@ -32,12 +48,12 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                loader: "esbuild-loader",
-                include: [resolve("src")],
+                loader: 'esbuild-loader',
+                include: [resolve('src')],
                 exclude: /node_modules/,
                 options: {
-                  loader: "ts",
-                  target: "esnext",
+                  loader: 'ts',
+                  target: 'esnext',
                 }
             }
         ],
@@ -46,10 +62,10 @@ module.exports = {
         new VueLoaderPlugin()
     ],
     resolve: {
-        extensions: [".js", ".ts", ".vue", ".json"],
+        extensions: ['.js', '.ts', '.vue', '.json'],
         alias: {
-            "@": resolve("src")
+            '@': resolve('src')
         },
-        modules: ["node_modules"],
+        modules: ['node_modules'],
     },
 }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { merge } = require('webpack-merge')
 const nodeExternals = require('webpack-node-externals')
 const baseConfig = require('./webpack.base.js')
@@ -9,8 +10,6 @@ module.exports = merge(baseConfig, {
     target: 'node',
     entry: resolve('src/entry/server.ts'),
     output: {
-        path: resolve('dist/server'),
-        filename: 'server-bundle.js',
         libraryTarget: 'commonjs2',
     },
     // 外置化应用程序依赖模块。可以使服务器构建速度更快，
@@ -21,7 +20,6 @@ module.exports = merge(baseConfig, {
         // 你还应该将修改 `global`（例如 polyfill）的依赖模块列入白名单
         allowlist: /\.css$/
     }),
-    // 这是将服务器的整个输出, 构建为单个 JSON 文件的插件。 默认文件名为 `vue-ssr-server-bundle.json`
     plugins: [
         new VueSSRServerPlugin(),
     ]
